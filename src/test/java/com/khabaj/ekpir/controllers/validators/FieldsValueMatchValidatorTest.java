@@ -1,6 +1,6 @@
 package com.khabaj.ekpir.controllers.validators;
 
-import com.khabaj.ekpir.controllers.dto.RegistrationDto;
+import com.khabaj.ekpir.controllers.dto.RegistrationRequest;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,20 +26,20 @@ public class FieldsValueMatchValidatorTest {
     @Test
     public void isValid_whenGivenPasswordsMatching_thenReturnTrue() {
 
-        RegistrationDto registrationDto = new RegistrationDto();
-        registrationDto.setPassword("pass");
-        registrationDto.setVerifyPassword("pass");
+        RegistrationRequest registrationRequest = new RegistrationRequest();
+        registrationRequest.setPassword("pass");
+        registrationRequest.setVerifyPassword("pass");
 
-        Assert.assertEquals(true, validator.isValid(registrationDto, null));
+        Assert.assertEquals(true, validator.isValid(registrationRequest, null));
     }
 
     @Test
     public void isValid_whenGivenPasswordsNotMatching_thenReturnFalse() {
 
-        RegistrationDto registrationDto = new RegistrationDto();
-        registrationDto.setPassword("pass");
-        registrationDto.setVerifyPassword("anotherPassword");
+        RegistrationRequest registrationRequest = new RegistrationRequest();
+        registrationRequest.setPassword("pass");
+        registrationRequest.setVerifyPassword("anotherPassword");
 
-        Assert.assertEquals(false, validator.isValid(registrationDto, null));
+        Assert.assertEquals(false, validator.isValid(registrationRequest, null));
     }
 }

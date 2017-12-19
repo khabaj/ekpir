@@ -1,7 +1,7 @@
 package com.khabaj.ekpir.controllers;
 
 import com.khabaj.ekpir.controllers.dto.AccountDto;
-import com.khabaj.ekpir.controllers.dto.RegistrationDto;
+import com.khabaj.ekpir.controllers.dto.RegistrationRequest;
 import com.khabaj.ekpir.persistence.domains.Account;
 import com.khabaj.ekpir.services.AccountService;
 import org.modelmapper.ModelMapper;
@@ -35,8 +35,8 @@ public class AccountController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void registerAccount(@RequestBody @Valid RegistrationDto registrationDto) {
-        Account account = modelMapper.map(registrationDto, Account.class);
+    public void registerAccount(@RequestBody @Valid RegistrationRequest registrationRequest) {
+        Account account = modelMapper.map(registrationRequest, Account.class);
         accountService.registerNewAccount(account);
     }
 }

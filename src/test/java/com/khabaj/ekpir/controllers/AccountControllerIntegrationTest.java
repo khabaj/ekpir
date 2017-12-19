@@ -1,7 +1,7 @@
 package com.khabaj.ekpir.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.khabaj.ekpir.controllers.dto.RegistrationDto;
+import com.khabaj.ekpir.controllers.dto.RegistrationRequest;
 import com.khabaj.ekpir.persistence.repositories.AccountRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,15 +38,15 @@ public class AccountControllerIntegrationTest {
     @Autowired
     AccountRepository accountRepository;
 
-    RegistrationDto registrationDto;
+    RegistrationRequest registrationRequest;
 
     @Before
     public void setUp() {
-        registrationDto = new RegistrationDto();
-        registrationDto.setUsername("admin");
-        registrationDto.setEmail("admin@example.com");
-        registrationDto.setPassword("password");
-        registrationDto.setVerifyPassword("password");
+        registrationRequest = new RegistrationRequest();
+        registrationRequest.setUsername("admin");
+        registrationRequest.setEmail("admin@example.com");
+        registrationRequest.setPassword("password");
+        registrationRequest.setVerifyPassword("password");
     }
 
     @Test
@@ -55,23 +55,23 @@ public class AccountControllerIntegrationTest {
         mockMvc.perform(
                 MockMvcRequestBuilders
                         .post("/accounts")
-                        .content(objectMapper.writeValueAsString(registrationDto))
+                        .content(objectMapper.writeValueAsString(registrationRequest))
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
 
-        assertEquals(true, accountRepository.findByUsername(registrationDto.getUsername()).isPresent());
+        assertEquals(true, accountRepository.findByUsername(registrationRequest.getUsername()).isPresent());
     }
 
     @Test
     public void givenIncorrectAccountEmail_whenRegisterNewAccount_thenReturn400BadRequest() throws Exception {
 
-        registrationDto.setEmail("asd@dsf@");
+        registrationRequest.setEmail("asd@dsf@");
 
         mockMvc.perform(
                 MockMvcRequestBuilders
                         .post("/accounts")
-                        .content(objectMapper.writeValueAsString(registrationDto))
+                        .content(objectMapper.writeValueAsString(registrationRequest))
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
@@ -83,14 +83,14 @@ public class AccountControllerIntegrationTest {
         mockMvc.perform(
                 MockMvcRequestBuilders
                         .post("/accounts")
-                        .content(objectMapper.writeValueAsString(registrationDto))
+                        .content(objectMapper.writeValueAsString(registrationRequest))
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .contentType(MediaType.APPLICATION_JSON_VALUE));
 
         mockMvc.perform(
                 MockMvcRequestBuilders
                         .post("/accounts")
-                        .content(objectMapper.writeValueAsString(registrationDto))
+                        .content(objectMapper.writeValueAsString(registrationRequest))
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());

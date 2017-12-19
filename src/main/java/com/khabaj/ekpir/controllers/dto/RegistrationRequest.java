@@ -11,14 +11,14 @@ import javax.validation.constraints.NotNull;
                 fieldMatch = "verifyPassword",
                 message = "Passwords do not match!"
         ))
-public class RegistrationDto extends AccountDto {
+public class RegistrationRequest extends AccountDto {
 
     @NotNull
     @NotEmpty
     private String password;
     private String verifyPassword;
 
-    public RegistrationDto() {
+    public RegistrationRequest() {
     }
 
     public String getPassword() {
