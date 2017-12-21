@@ -1,0 +1,18 @@
+spring:
+  application:
+     name: auth-service
+
+management:
+  context-path: /management
+
+logging:
+  level:
+    root: INFO
+  file: application.log
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    healthcheck:
+      enabled: true

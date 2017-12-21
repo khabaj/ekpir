@@ -1,5 +1,13 @@
 version: '3'
 services:
+  service-registry:
+      build:
+        context: ./service-registry
+        args:
+          - JAR_FILE=service-registry-0.0.1-SNAPSHOT.jar
+      ports:
+        - "8761:8761"
+
   auth-service:
     build:
       context: ./auth-service
@@ -7,3 +15,7 @@ services:
         - JAR_FILE=auth-service-0.0.1-SNAPSHOT.jar
     ports:
       - "8080:8080"
+    depends_on:
+      - service-registry
+
+
