@@ -10,5 +10,6 @@
     <modules>
         <module>auth-service</module>
         <module>service-registry</module>
+        <module>gateway-service</module>
     </modules>
 </project>
