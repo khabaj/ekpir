@@ -1,28 +1,63 @@
 version: '3'
+
 services:
+  ################## service-registry #############
   service-registry:
       build:
         context: ./service-registry
         args:
           - JAR_FILE=service-registry-0.0.1-SNAPSHOT.jar
+      env_file:
+        - env_variables.env
       ports:
         - "8761:8761"
-   gateway-service:
-        build:
-          context: ./service-registry
-          args:
-            - JAR_FILE=gateway-service-0.0.1-SNAPSHOT.jar
-        ports:
-          - "8000:8000"
+      depends_on:
+        - config-server
+      restart: on-failure
+      network_mode: host
 
+  ################## gateway-service #############
+  gateway-service:
+    build:
+      context: ./gateway-service
+      args:
+        - JAR_FILE=gateway-service-0.0.1-SNAPSHOT.jar
+    env_file:
+      - env_variables.env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - config-server
+    restart: on-failure
+    network_mode: host
+
+  ################## config-server #############
+  config-server:
+    build:
+      context: ./config-server
+      args:
+        - JAR_FILE=config-server-0.0.1-SNAPSHOT.jar
+    env_file:
+      - env_variables.env
+    ports:
+      - "8888:8888"
+    restart: on-failure
+    network_mode: host
+
+  ################## auth-service #############
   auth-service:
     build:
       context: ./auth-service
       args:
         - JAR_FILE=auth-service-0.0.1-SNAPSHOT.jar
+    env_file:
+      - env_variables.env
     ports:
       - "8080:8080"
     depends_on:
+      - config-server
       - service-registry
+    restart: on-failure
+    network_mode: host
 
 

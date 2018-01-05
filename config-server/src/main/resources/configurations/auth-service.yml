@@ -1,0 +1,11 @@
+server:
+  port: 8082
+
+management:
+  context-path: /management
+
+logging:
+  level:
+    root: WARN
+  file: application.log
+

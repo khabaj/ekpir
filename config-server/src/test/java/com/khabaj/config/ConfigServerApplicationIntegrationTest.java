@@ -1,4 +1,4 @@
-package com.khabaj.ekpir;
+package com.khabaj.config;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,10 +8,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ActiveProfiles("test")
-public class ApplicationIntegrationTest {
+@ActiveProfiles("native, test")
+public class ConfigServerApplicationIntegrationTest {
 
 	@Test
 	public void contextLoads() {
 	}
+
 }
