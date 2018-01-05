@@ -7,10 +7,10 @@ services:
         context: ./service-registry
         args:
           - JAR_FILE=service-registry-0.0.1-SNAPSHOT.jar
+      environment:
+        - PORT=8761
       env_file:
         - env_variables.env
-      ports:
-        - "8761:8761"
       depends_on:
         - config-server
       restart: on-failure
@@ -22,10 +22,10 @@ services:
       context: ./gateway-service
       args:
         - JAR_FILE=gateway-service-0.0.1-SNAPSHOT.jar
+    environment:
+      - PORT=8000
     env_file:
       - env_variables.env
-    ports:
-      - "8000:8000"
     depends_on:
       - config-server
     restart: on-failure
@@ -37,10 +37,10 @@ services:
       context: ./config-server
       args:
         - JAR_FILE=config-server-0.0.1-SNAPSHOT.jar
+    environment:
+      - PORT=8888
     env_file:
       - env_variables.env
-    ports:
-      - "8888:8888"
     restart: on-failure
     network_mode: host
 
@@ -50,10 +50,10 @@ services:
       context: ./auth-service
       args:
         - JAR_FILE=auth-service-0.0.1-SNAPSHOT.jar
+    environment:
+      - PORT=8090
     env_file:
       - env_variables.env
-    ports:
-      - "8080:8080"
     depends_on:
       - config-server
       - service-registry
