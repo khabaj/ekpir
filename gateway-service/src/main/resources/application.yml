@@ -2,6 +2,7 @@ server:
   port: 8000
 
 zuul:
+  sensitiveHeaders:
   prefix: /api
   routes:
     auth-service:
