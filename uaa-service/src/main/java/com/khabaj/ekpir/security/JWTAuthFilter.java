@@ -38,11 +38,9 @@ public class JWTAuthFilter extends BasicAuthenticationFilter {
         }
 
         if (StringUtils.hasText(authToken) && authToken.startsWith(TOKEN_PREFIX)) {
-            authToken = authToken.replace(TOKEN_PREFIX, "");
+            authToken = authToken.replace(TOKEN_PREFIX, "").trim();
             if (SecurityContextHolder.getContext().getAuthentication() == null) {
-
                 String username = JWTUtils.getSubjectFromToken(authToken);
-
                 if (StringUtils.hasText(username)) {
                     UsernamePasswordAuthenticationToken authentication =
                             new UsernamePasswordAuthenticationToken(username, null, Collections.emptyList());

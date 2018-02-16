@@ -1,6 +1,7 @@
 package com.khabaj.ekpir.controllers;
 
 import com.khabaj.ekpir.controllers.dto.AuthenticationRequest;
+import com.khabaj.ekpir.controllers.dto.TokenResponse;
 import com.khabaj.ekpir.security.JWTUtils;
 import com.khabaj.ekpir.security.SecurityConstants;
 import org.springframework.http.HttpHeaders;
@@ -23,9 +24,9 @@ public class TokenController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void generateToken(@RequestBody @Valid AuthenticationRequest authenticationRequest,
-                              @RequestParam(value = "setCookie", required = false) boolean setCookie,
-                              HttpServletResponse response) {
+    public TokenResponse generateToken(@RequestBody @Valid AuthenticationRequest authenticationRequest,
+                                       @RequestParam(value = "setCookie", required = false) boolean setCookie,
+                                       HttpServletResponse response) {
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
@@ -38,6 +39,7 @@ public class TokenController {
             authCookie.setHttpOnly(true);
             response.addCookie(authCookie);
         }
-        response.addHeader(HttpHeaders.AUTHORIZATION, SecurityConstants.TOKEN_PREFIX + token);
+        response.addHeader(HttpHeaders.AUTHORIZATION, SecurityConstants.TOKEN_PREFIX + " " + token);
+        return new TokenResponse(token, SecurityConstants.TOKEN_PREFIX);
     }
 }
